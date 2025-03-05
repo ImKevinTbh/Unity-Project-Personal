@@ -8,18 +8,20 @@ public class MovementController : MonoBehaviour
     public float Speed = 15f;
     public float MaxSpeed = 25;
     public float JumpPower = 10;
-    Rigidbody2D rb;
-    BoxCollider2D box;
-    public LayerMask mask;
     public int maxJumps = 2;
+    public LayerMask mask;
+    public Vector2 spawn;
+
+
+    private Rigidbody2D rb;
     private int jumps = 0;
     private bool onground = false;
+
     // Start is called before the first frame update
     void Start()
     {
         jumps = maxJumps;
         rb = GetComponent<Rigidbody2D>();
-        box = GetComponent<BoxCollider2D>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,12 +33,23 @@ public class MovementController : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Boundary"))
+        {
+            gameObject.transform.position = spawn;
+            rb.velocity = Vector2.zero;
+        }
+    }
+
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             onground = false;
         }
+
     }
 
 
@@ -55,12 +68,15 @@ public class MovementController : MonoBehaviour
         if (inputX < 0)
         {
             //gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
+
             gameObject.transform.localScale = new Vector3(-1, 1, 1);
+            gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
         }
-        else
+        else if (inputX > 0)
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
             //gameObject.transform.rotation = new Quaternion(0, 0, 0, 0);
+            gameObject.GetComponent<SpriteRenderer>().color = Color.red;
         }
 
 
@@ -77,7 +93,8 @@ public class MovementController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && jumps > 0)
         {
             jumps--;
-            rb.AddForce((Vector3.up * JumpPower)*rb.mass, ForceMode2D.Impulse);
+            rb.AddForce((Vector3.up * JumpPower) * rb.mass, ForceMode2D.Impulse);
+
         }
 
     }

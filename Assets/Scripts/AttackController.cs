@@ -13,7 +13,8 @@ public class AttackController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0) && canShoot)
         {
-            Timing.RunCoroutine(Shoot());
+            Timing.RunCoroutine(Shoot().CancelWith(gameObject));
+            
         }
     }
 
@@ -21,9 +22,10 @@ public class AttackController : MonoBehaviour
     {
         canShoot = false;
         Instantiate(bullet, transform.position, transform.rotation);
-        yield return Timing.WaitForSeconds(0.2f);
+        yield return Timing.WaitForSeconds(0.05f);
         Debug.Log("AAAA");
         canShoot = true;
+        
     }
 
 
