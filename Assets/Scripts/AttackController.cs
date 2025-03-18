@@ -22,7 +22,7 @@ public class AttackController : MonoBehaviour
     {
         canShoot = false;
         Instantiate(bullet, transform.position, transform.rotation);
-        yield return Timing.WaitForSeconds(0.05f);
+        yield return Timing.WaitForSeconds(0.55f);
         Debug.Log("AAAA");
         canShoot = true;
         

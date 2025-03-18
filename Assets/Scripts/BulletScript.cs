@@ -6,6 +6,7 @@ public class BulletScript : MonoBehaviour
     public float Created;
     public float LifeTime;
     public float bSpeed = 1;
+    public float pushBackForce = 2000f;
     private Vector2 target;
     // Start is called before the first frame update
     void Awake()
@@ -14,6 +15,8 @@ public class BulletScript : MonoBehaviour
         Created = Time.time;
         target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         GetComponent<Rigidbody2D>().AddForce(((Vector2)gameObject.transform.position - target).normalized * bSpeed * -Vector2.one);
+        GameObject pl = GameObject.Find("PlayerModel");
+        pl.GetComponent<Rigidbody2D>().AddForce(((target - (Vector2)gameObject.transform.position).normalized * pushBackForce * -Vector2.one), ForceMode2D.Impulse);
         Debug.Log($"Mouse target is: {target}");
         //GetComponent<Rigidbody2D>().AddForce(target.normalized * bSpeed * -Vector2.one);
     }
