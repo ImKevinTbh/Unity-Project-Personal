@@ -8,13 +8,7 @@ public class MovementHandler : MonoBehaviour
 {
 
     //- Fixed list of available states -//
-    public enum MovementStates
-    {
-        Still,
-        Walking,
-        Jumping,
-        Falling
-    }
+
 
     //- Settings -// 
     public float Speed = 35f;
@@ -22,7 +16,7 @@ public class MovementHandler : MonoBehaviour
 
     public float JumpPower = 10;
     public int MaxJumps = 2;
-    private int _JumpsUsed = 0;
+    public int _JumpsUsed = 0;
 
     public bool CheatMode = false;
 
@@ -30,7 +24,9 @@ public class MovementHandler : MonoBehaviour
     private LayerMask mask;
     private Rigidbody2D rb;
 
-    public MovementStates State { get; set; }
+
+    public bool OnGround = false;
+
 
     //- variables that are ONLY used for tracking info should be prefixed by a `_` symbol so I can find tracking vs functional variables later -//
 
@@ -60,6 +56,15 @@ public class MovementHandler : MonoBehaviour
         else { movement = new Vector2(inputX * Speed, inputY * Speed); }
         movement *= Time.deltaTime * 100;
 
+        if (!GroundCheck())
+        {
+            OnGround = false;
+        }
+        else
+        {
+            OnGround = true;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space)) { Jump(); }
 
         Move(movement, CheatMode, NoInput);
@@ -72,13 +77,11 @@ public class MovementHandler : MonoBehaviour
 
         if (GroundCheck())
         {
-            Debug.Log("GroundCheckPassed");
             _JumpsUsed = 0;
         }
 
         if (_JumpsUsed < MaxJumps)
         {
-            Debug.Log("Jumping");
             _JumpsUsed++;
             rb.velocity = new Vector2(rb.velocity.x, JumpPower * (rb.mass + rb.gravityScale / 10));
         }
@@ -112,20 +115,13 @@ public class MovementHandler : MonoBehaviour
         rb.AddForce(movement, ForceMode2D.Force);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (GroundCheck())
-        {
-            _JumpsUsed = MaxJumps; // Reset Jumps Back To Max
-        }
-    }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Boundary"))
         {
             gameObject.transform.position = Spawn;
             rb.velocity = Vector2.zero;
+            OnGround = false;
         }
     }
 

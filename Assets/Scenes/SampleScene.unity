@@ -1203,12 +1203,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420841697}
-  - component: {fileID: 420841705}
+  - component: {fileID: 420841707}
+  - component: {fileID: 420841706}
   - component: {fileID: 420841702}
   - component: {fileID: 420841704}
   - component: {fileID: 420841701}
   - component: {fileID: 420841699}
   - component: {fileID: 420841698}
+  - component: {fileID: 420841705}
   m_Layer: 6
   m_Name: PlayerModel
   m_TagString: Player
@@ -1384,15 +1386,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 420841696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8999737786039614fb0b299d09aa7373, type: 3}
+  m_Script: {fileID: 11500000, guid: 859952e76ec78af4e9ac0cd0affb70f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: 
+--- !u!114 &420841706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420841696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bf7f601dd8cfd04d9bbfa930ec8f0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 35
   MaxSpeed: 7.5
   JumpPower: 10
   MaxJumps: 2
+  _JumpsUsed: 0
   CheatMode: 0
-  Spawn: {x: -17, y: 4}
+  Spawn: {x: 0, y: 0}
+  OnGround: 0
+--- !u!114 &420841707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420841696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 859952e76ec78af4e9ac0cd0affb70f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StateName: 
 --- !u!1 &449298304
 GameObject:
   m_ObjectHideFlags: 0
